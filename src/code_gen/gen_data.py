@@ -1,5 +1,6 @@
 import os
 import subprocess
+import re
 from os.path import isfile
 
 
@@ -42,14 +43,17 @@ def storeResults(results, input_path):
 
     f_in.close()
     f_out.close()
-
+def sorted_alphanumeric(data):
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    return sorted(data, key=alphanum_key)
 
 def main():
-    checkDirectory('../results')
+    checkDirectory('..\\results')
 
-    dir = "../generated_inputs\\"
+    dir = "..\generated_inputs\\"
     all_files = os.listdir(dir)
-    print(all_files)
+    print(sorted_alphanumeric(all_files))
 
     # print(all_files)
     for file in all_files:
